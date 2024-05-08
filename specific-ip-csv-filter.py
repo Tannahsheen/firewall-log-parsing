@@ -1,10 +1,15 @@
 import csv
-ip_address = 'xxx.xxx.xxx.xxx'
+ip_address = 'XXX.XXX.XXX.XXX'
 filtered_rows = []
-with open('INPUTFILE.csv', 'r') as csvfile:
-    reader = csv.DictReader(csvfile)
+with open('YOURFILE.csv', 'r') as csvfile:
+    reader = csv.reader(csvfile)
     for row in reader:
-        if row['src_ip'] == ip_address or row['dst_ip'] == ip_address:
+        if ip_address in row:
             filtered_rows.append(row)
-for row in filtered_rows:
-    print(row)
+if filtered_rows:
+    with open('filtered.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(filtered_rows)
+    print("Filtered rows written to 'filtered.csv'")
+else: 
+    print("IP not found")
